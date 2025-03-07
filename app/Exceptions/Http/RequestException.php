@@ -2,7 +2,6 @@
 
 namespace App\Exceptions\Http;
 
-class RequestException extends \Exception
-{
+use App\Exceptions\BaseException;
 
-}
+class RequestException extends BaseException {}

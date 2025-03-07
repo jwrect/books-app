@@ -2,7 +2,6 @@
 
 namespace App\Exceptions\Http;
 
-class InvalidParametersException extends \Exception
-{
+use App\Exceptions\BaseException;
 
-}
+class InvalidParametersException extends BaseException {}
