@@ -2,57 +2,159 @@
 
 namespace App\Http\Api\v1\Controllers;
 
-use App\Clients\Books\BooksApiInterface;
+use App\Http\Api\v1\Requests\BooksRequests\GetBestSellersNamesRequest;
+use App\Http\Api\v1\Requests\BooksRequests\GetBestSellersRequest;
+use App\Http\Api\v1\Requests\BooksRequests\GetBookReviewsRequest;
+use App\Http\Api\v1\Requests\BooksRequests\GetBooksFullOverviewRequest;
+use App\Http\Api\v1\Requests\BooksRequests\GetTopFiveBooksRequest;
+use App\Services\BooksService;
+use Illuminate\Http\JsonResponse;
 
 class BookController extends Controller
 {
-    private BooksApiInterface $api;
+    /**
+     * @var BooksService
+     */
+    private BooksService $booksService;
 
-    public function __construct(BooksApiInterface $api)
+    /**
+     * @param BooksService $booksService
+     */
+    public function __construct(BooksService $booksService)
     {
-        $this->api = $api;
+        $this->booksService = $booksService;
     }
 
-    public function getBestSellers()
+    /**
+     * @param GetBestSellersRequest $request
+     * @return JsonResponse
+     */
+    public function getBestSellers(GetBestSellersRequest $request): JsonResponse
     {
         try {
-            $response = $this->api->getBestSellers();
+            $data = $request->filtered();
+            $response = $this->booksService->getBestSellers($data);
+
+            return response()->json($response);
         } catch (\Exception $e) {
-
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        return response()->json($response, 200);
     }
 
-    public function getBestSellersByDate()
+    /**
+     * @param GetBestSellersRequest $request
+     * @return JsonResponse
+     */
+    public function getBestSellersByDate(GetBestSellersRequest $request): JsonResponse
     {
-        $response = $this->api->getBestSellersByDate();
+        try {
+            $data = $request->filtered();
+            $response = $this->booksService->getBestSellerByDate($data);
 
-        return response()->json($response, 200);
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function getBestSellersHistory()
+    /**
+     * @param GetBestSellersRequest $request
+     * @return JsonResponse
+     */
+    public function getBestSellersHistory(GetBestSellersRequest $request): JsonResponse
     {
-        $response = $this->api->getBestSellersHistory();
+        try {
+            $data = $request->filtered();
+            $response = $this->booksService->getBestSellersHistory($data);
+
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function getBooksFullOverview()
+    /**
+     * @param GetBooksFullOverviewRequest $request
+     * @return JsonResponse
+     */
+    public function getBooksFullOverview(GetBooksFullOverviewRequest $request): JsonResponse
     {
-        $response = $this->api->getBooksFullOverview();
+        try {
+            $data = $request->filtered();
+            $response = $this->booksService->getBooksFullOverview($data);
+
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function getBestSellersNames()
+    /**
+     * @param GetBestSellersNamesRequest $request
+     * @return JsonResponse
+     */
+    public function getBestSellersNames(GetBestSellersNamesRequest $request): JsonResponse
     {
-        $response = $this->api->getBestSellersNames();
+        try {
+            $data = $request->filtered();
+            $response = $this->booksService->getBestSellersNames($data);
+
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function getTopFiveBooks()
+    /**
+     * @param GetTopFiveBooksRequest $request
+     * @return JsonResponse
+     */
+    public function getTopFiveBooks(GetTopFiveBooksRequest $request): JsonResponse
     {
-        $response = $this->api->getTopFiveBooks();
+        try {
+            $data = $request->filtered();
+            $response = $this->booksService->getTopFiveBooks($data);
+
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function getBookReviews()
+    /**
+     * @param GetBookReviewsRequest $request
+     * @return JsonResponse
+     */
+    public function getBookReviews(GetBookReviewsRequest $request): JsonResponse
     {
-        $this->api->getBookReviews();
+        try {
+            $data = $request->filtered();
+            $response = $this->booksService->getBookReviews($data);
+
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }
