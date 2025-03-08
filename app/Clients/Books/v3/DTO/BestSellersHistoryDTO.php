@@ -8,21 +8,21 @@ final class BestSellersHistoryDTO extends BooksDTO
      * @param string|null $ageGroup
      * @param string|null $author
      * @param string|null $contributor
-     * @param string|null $isbn
+     * @param array|null $isbn
      * @param int|null $offset
      * @param string|null $price
      * @param string|null $publisher
      * @param string|null $title
      */
     public function __construct(
-        private readonly string|null $ageGroup,
-        private readonly string|null $author,
-        private readonly string|null $contributor,
-        private readonly string|null $isbn,
-        private readonly int|null $offset,
-        private readonly string|null $price,
-        private readonly string|null $publisher,
-        private readonly string|null $title,
+        protected readonly string|null $ageGroup = null,
+        protected readonly string|null $author  = null,
+        protected readonly string|null $contributor = null,
+        protected readonly array|null $isbn = null,
+        protected readonly int|null $offset = null,
+        protected readonly string|null $price  = null,
+        protected readonly string|null $publisher = null,
+        protected readonly string|null $title = null,
     ) {
         parent::__construct();
     }
@@ -38,8 +38,11 @@ final class BestSellersHistoryDTO extends BooksDTO
             'contributor' => 'nullable|string|max:255',
             'isbn' => [
                 'nullable',
+                'array',
+            ],
+            'isbn.*' => [
                 'string',
-                'regex:/^(\d{10}|\d{13})(;\d{10}|\d{13})*$/'
+                'regex:/^(\d{10}|\d{13})$/'
             ],
             'offset' => 'nullable|integer|min:0|multiple_of:20',
             'price' => [
@@ -57,7 +60,11 @@ final class BestSellersHistoryDTO extends BooksDTO
      */
     public function toQueryArray(): array
     {
-        $data = get_object_vars($this);
+        $data = $this->getObjectVars();
+
+        if (isset($data['isbn']) && is_array($data['isbn'])) {
+            $data['isbn'] = implode(';', $data['isbn']);
+        }
 
         $data['age-group'] = $data['ageGroup'] ?? null;
         unset($data['ageGroup']);

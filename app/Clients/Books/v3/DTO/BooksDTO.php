@@ -13,7 +13,7 @@ abstract class BooksDTO extends DTO
 
     public function __construct()
     {
-        $this->apiKey = config('external-api.books.apiKey');
+        $this->apiKey = config('external-api.books.api_key');
     }
 
     /**
@@ -37,8 +37,19 @@ abstract class BooksDTO extends DTO
     /**
      * @return array
      */
+    public function getObjectVars(): array
+    {
+        $data = get_object_vars($this);
+        $data['api-key'] = $this->apiKey;
+        unset($data['apiKey']);
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
     public function toQueryArray(): array
     {
-        return array_filter($this->toArray(), fn($value) => !is_null($value));
+        return array_filter($this->getObjectVars(), fn($value) => !is_null($value));
     }
 }

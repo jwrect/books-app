@@ -16,7 +16,6 @@ class BookApiClientProvider extends ServiceProvider
     {
         $this->app->bind(BooksClientInterface::class, function ($app) {
             $version = config('external-api.books.version');
-
             return match ($version) {
                 'v3' => $app->make(BooksV3Client::class),
                 default => throw new \RuntimeException("Unsupported API version: $version"),
@@ -29,7 +28,7 @@ class BookApiClientProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $baseUrl = config('external-api.books.endpoint') + config('external-api.books.version');
+        $baseUrl = config('external-api.books.endpoint') . config('external-api.books.version');
 
         Http::macro('books', function () use ($baseUrl) {
             return Http::baseUrl($baseUrl);

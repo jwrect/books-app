@@ -17,8 +17,11 @@ class GetBestSellersHistory extends BaseRequest
             'contributor' => 'nullable|string|max:255',
             'isbn' => [
                 'nullable',
+                'array',
+            ],
+            'isbn.*' => [
                 'string',
-                'regex:/^(\d{10}|\d{13})(;\d{10}|\d{13})*$/'
+                'regex:/^(\d{10}|\d{13})$/'
             ],
             'offset' => 'nullable|integer|min:0|multiple_of:20',
             'price' => [
@@ -43,8 +46,8 @@ class GetBestSellersHistory extends BaseRequest
             'author.max' => 'Parameter "author" must be less than 255 characters.',
             'contributor.string' => 'Parameter "contributor" must be a string.',
             'contributor.max' => 'Parameter "contributor" must be less than 255 characters.',
-            'isbn.string' => 'Parameter "isbn" must be a string.',
-            'isbn.regex' => 'Parameter "isbn" must be a string with 10- or 13-digit.',
+            'isbn.array' => 'Parameter "isbn" must be an array.',
+            'isbn.*.regex' => 'Each isbn must be a string with 10 or 13 digits.',
             'offset.integer' => 'Parameter "offset" must be an integer.',
             'offset.min' => 'Parameter "offset" must be greater than or equal to 0.',
             'offset.multiple_of' => 'Parameter "offset" must be a multiple of 20',

@@ -10,9 +10,9 @@ final class BestSellersByDateDTO extends BooksDTO
      * @param int|null $offset
      */
     public function __construct(
-        private readonly string $list,
-        private readonly string $date,
-        private readonly int|null $offset
+        protected readonly string $list,
+        protected readonly string $date,
+        protected readonly int|null $offset = null,
     ) {
         parent::__construct();
     }
@@ -34,7 +34,7 @@ final class BestSellersByDateDTO extends BooksDTO
      */
     public function toQueryArray(): array
     {
-        $data = $this->toArray();
+        $data = $this->getObjectVars();
 
         unset($data['list']);
         unset($data['date']);

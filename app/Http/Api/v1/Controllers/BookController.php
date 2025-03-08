@@ -2,6 +2,8 @@
 
 namespace App\Http\Api\v1\Controllers;
 
+use App\Http\Api\v1\Requests\BooksRequests\GetBestSellersByDateRequest;
+use App\Http\Api\v1\Requests\BooksRequests\GetBestSellersHistory;
 use App\Http\Api\v1\Requests\BooksRequests\GetBestSellersNamesRequest;
 use App\Http\Api\v1\Requests\BooksRequests\GetBestSellersRequest;
 use App\Http\Api\v1\Requests\BooksRequests\GetBookReviewsRequest;
@@ -35,7 +37,10 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBestSellers($data);
 
-            return response()->json($response);
+            return response()->json([
+                'success' => true,
+                'data' => $response
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -45,10 +50,10 @@ class BookController extends Controller
     }
 
     /**
-     * @param GetBestSellersRequest $request
+     * @param GetBestSellersByDateRequest $request
      * @return JsonResponse
      */
-    public function getBestSellersByDate(GetBestSellersRequest $request): JsonResponse
+    public function getBestSellersByDate(GetBestSellersByDateRequest $request): JsonResponse
     {
         try {
             $data = $request->filtered();
@@ -64,16 +69,19 @@ class BookController extends Controller
     }
 
     /**
-     * @param GetBestSellersRequest $request
+     * @param GetBestSellersHistory $request
      * @return JsonResponse
      */
-    public function getBestSellersHistory(GetBestSellersRequest $request): JsonResponse
+    public function getBestSellersHistory(GetBestSellersHistory $request): JsonResponse
     {
         try {
             $data = $request->filtered();
             $response = $this->booksService->getBestSellersHistory($data);
 
-            return response()->json($response);
+            return response()->json([
+                'success' => true,
+                'data' => $response
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -92,7 +100,10 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBooksFullOverview($data);
 
-            return response()->json($response);
+            return response()->json([
+                'success' => true,
+                'data' => $response
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -111,7 +122,10 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBestSellersNames($data);
 
-            return response()->json($response);
+            return response()->json([
+                'success' => true,
+                'data' => $response
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -130,7 +144,10 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getTopFiveBooks($data);
 
-            return response()->json($response);
+            return response()->json([
+                'success' => true,
+                'data' => $response
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -149,7 +166,10 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBookReviews($data);
 
-            return response()->json($response);
+            return response()->json([
+                'success' => true,
+                'data' => $response
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

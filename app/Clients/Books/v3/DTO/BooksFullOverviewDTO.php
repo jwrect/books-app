@@ -8,7 +8,7 @@ final class BooksFullOverviewDTO extends BooksDTO
      * @param string|null $publishedDate
      */
     public function __construct(
-        private readonly string|null $publishedDate
+        protected readonly string|null $publishedDate = null,
     ) {
         parent::__construct();
     }
@@ -28,7 +28,7 @@ final class BooksFullOverviewDTO extends BooksDTO
      */
     public function toQueryArray(): array
     {
-        $data = get_object_vars($this);
+        $data = $this->getObjectVars();
 
         $data['published_date'] = $data['publishedDate'] ?? null;
         unset($data['publishedDate']);

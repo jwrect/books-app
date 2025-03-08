@@ -2,7 +2,9 @@
 
 namespace App\Http\Api;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Str;
 
 abstract class BaseRequest extends FormRequest
@@ -14,5 +16,14 @@ abstract class BaseRequest extends FormRequest
         return collect($data)->mapWithKeys(function ($value, $key) {
             return [Str::camel($key) => $value];
         })->toArray();
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Validation failed',
+            'errors'  => $validator->errors()
+        ], 422));
     }
 }
