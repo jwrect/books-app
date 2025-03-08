@@ -9,7 +9,6 @@ use App\Http\Api\v1\Requests\BooksRequests\GetBestSellersRequest;
 use App\Http\Api\v1\Requests\BooksRequests\GetBookReviewsRequest;
 use App\Http\Api\v1\Requests\BooksRequests\GetBooksFullOverviewRequest;
 use App\Http\Api\v1\Requests\BooksRequests\GetTopFiveBooksRequest;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use App\Services\BooksService;
 use Illuminate\Http\JsonResponse;
 
@@ -38,15 +37,9 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBestSellers($data);
 
-            return response()->json([
-                'success' => true,
-                'data' => $response
-            ]);
+            return $this->successResponse($response);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse($e->getMessage());
         }
     }
 
@@ -60,12 +53,9 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBestSellerByDate($data);
 
-            return response()->json($response);
+            return $this->successResponse($response);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse($e->getMessage());
         }
     }
 
@@ -79,15 +69,9 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBestSellersHistory($data);
 
-            return response()->json([
-                'success' => true,
-                'data' => $response
-            ]);
+            return $this->successResponse($response);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse($e->getMessage());
         }
     }
 
@@ -101,15 +85,9 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBooksFullOverview($data);
 
-            return response()->json([
-                'success' => true,
-                'data' => $response
-            ]);
+            return $this->successResponse($response);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse($e->getMessage());
         }
     }
 
@@ -123,15 +101,9 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBestSellersNames($data);
 
-            return response()->json([
-                'success' => true,
-                'data' => $response
-            ]);
+            return $this->successResponse($response);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse($e->getMessage());
         }
     }
 
@@ -145,15 +117,9 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getTopFiveBooks($data);
 
-            return response()->json([
-                'success' => true,
-                'data' => $response
-            ]);
+            return $this->successResponse($response);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse($e->getMessage());
         }
     }
 
@@ -167,15 +133,9 @@ class BookController extends Controller
             $data = $request->filtered();
             $response = $this->booksService->getBookReviews($data);
 
-            return response()->json([
-                'success' => true,
-                'data' => $response
-            ]);
+            return $this->successResponse($response);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse($e->getMessage());
         }
     }
 }
