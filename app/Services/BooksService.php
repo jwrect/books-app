@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Cache;
 class BooksService
 {
     private BooksClientInterface $client;
+    private int $ttl;
 
     public function __construct(BooksClientInterface $client)
     {
         $this->client = $client;
+        $this->ttl = config('external-api.books.ttl');
     }
 
     /**
@@ -24,7 +26,7 @@ class BooksService
     public function getBestSellers(array $data): array
     {
         $cacheKey = CacheHelper::generateCacheKey('best_sellers_', $data);
-        return Cache::remember($cacheKey, 3600, function () use ($data) {
+        return Cache::remember($cacheKey, $this->ttl, function () use ($data) {
             return $this->client->fetchBestSellers($data);
         });
     }
@@ -37,7 +39,7 @@ class BooksService
     public function getBestSellerByDate(array $data): array
     {
         $cacheKey = CacheHelper::generateCacheKey('best_seller_by_date_', $data);
-        return Cache::remember($cacheKey, 3600, function () use ($data) {
+        return Cache::remember($cacheKey, $this->ttl, function () use ($data) {
             return $this->client->fetchBestSellersByDate($data);
         });
     }
@@ -50,7 +52,7 @@ class BooksService
     public function getBestSellersHistory(array $data): array
     {
         $cacheKey = CacheHelper::generateCacheKey('best_sellers_history_', $data);
-        return Cache::remember($cacheKey, 3600, function () use ($data) {
+        return Cache::remember($cacheKey, $this->ttl, function () use ($data) {
             return $this->client->fetchBestSellersHistory($data);
         });
     }
@@ -63,7 +65,7 @@ class BooksService
     public function getBooksFullOverview(array $data): array
     {
         $cacheKey = CacheHelper::generateCacheKey('books_full_overview_', $data);
-        return Cache::remember($cacheKey, 3600, function () use ($data) {
+        return Cache::remember($cacheKey, $this->ttl, function () use ($data) {
             return $this->client->fetchBooksFullOverview($data);
         });
     }
@@ -76,7 +78,7 @@ class BooksService
     public function getBestSellersNames(array $data): array
     {
         $cacheKey = CacheHelper::generateCacheKey('best_sellers_names_', $data);
-        return Cache::remember($cacheKey, 3600, function () use ($data) {
+        return Cache::remember($cacheKey, $this->ttl, function () use ($data) {
             return $this->client->fetchBestSellersNames();
         });
     }
@@ -89,7 +91,7 @@ class BooksService
     public function getTopFiveBooks(array $data): array
     {
         $cacheKey = CacheHelper::generateCacheKey('top_five_books_', $data);
-        return Cache::remember($cacheKey, 3600, function () use ($data) {
+        return Cache::remember($cacheKey, $this->ttl, function () use ($data) {
             return $this->client->fetchTopFiveBooks($data);
         });
     }
@@ -102,7 +104,7 @@ class BooksService
     public function getBookReviews(array $data): array
     {
         $cacheKey = CacheHelper::generateCacheKey('book_reviews_', $data);
-        return Cache::remember($cacheKey, 3600, function () use ($data) {
+        return Cache::remember($cacheKey, $this->ttl, function () use ($data) {
             return $this->client->fetchBookReviews($data);
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Api;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Illuminate\Support\Str;
 
 abstract class BaseRequest extends FormRequest
@@ -24,6 +25,6 @@ abstract class BaseRequest extends FormRequest
             'success' => false,
             'message' => 'Validation failed',
             'errors'  => $validator->errors()
-        ], 422));
+        ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

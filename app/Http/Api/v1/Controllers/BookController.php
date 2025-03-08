@@ -9,6 +9,7 @@ use App\Http\Api\v1\Requests\BooksRequests\GetBestSellersRequest;
 use App\Http\Api\v1\Requests\BooksRequests\GetBookReviewsRequest;
 use App\Http\Api\v1\Requests\BooksRequests\GetBooksFullOverviewRequest;
 use App\Http\Api\v1\Requests\BooksRequests\GetTopFiveBooksRequest;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use App\Services\BooksService;
 use Illuminate\Http\JsonResponse;
 
@@ -45,7 +46,7 @@ class BookController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
-            ], 500);
+            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -64,7 +65,7 @@ class BookController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
-            ], 500);
+            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -86,7 +87,7 @@ class BookController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
-            ], 500);
+            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -108,7 +109,7 @@ class BookController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
-            ], 500);
+            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -130,7 +131,7 @@ class BookController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
-            ], 500);
+            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -152,7 +153,7 @@ class BookController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
-            ], 500);
+            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -174,7 +175,7 @@ class BookController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
-            ], 500);
+            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
